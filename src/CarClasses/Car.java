@@ -1,15 +1,18 @@
 package CarClasses;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
+
     protected String brandAndModel;
     protected String fuelType;
-    protected int registrationNumber;
+    protected String registrationNumber;
     protected int registrationYearMonth;
     protected int odoMeter;
     protected boolean automaticGear;
     protected boolean isAvailable;
 
-    public Car(String brandAndModel, String fuelType, int registrationNumber, int registrationYearMonth, int odoMeter, boolean automaticGear, boolean isAvailable) {
+    public Car(String brandAndModel, String fuelType, String registrationNumber, int registrationYearMonth, int odoMeter, boolean automaticGear, boolean isAvailable) {
         this.brandAndModel = brandAndModel;
         this.fuelType = fuelType;
         this.registrationNumber = registrationNumber;
@@ -38,11 +41,11 @@ public class Car {
         this.fuelType = fuelType;
     }
 
-    public int getRegistrationNumber() {
+    public String getRegistrationNumber() {
         return registrationNumber;
     }
 
-    public void setRegistrationNumber(int registrationNumber) {
+    public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
     }
 

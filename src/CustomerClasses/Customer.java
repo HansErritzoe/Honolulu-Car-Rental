@@ -1,6 +1,8 @@
 package CustomerClasses;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable {
 
     protected String driverName;
     protected String address;

@@ -1,8 +1,9 @@
 package CustomerClasses;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class PrivateCustomer extends Customer {
+public class PrivateCustomer extends Customer implements Serializable {
 
     protected int licenseNumber;
     protected LocalDate releaseDate;

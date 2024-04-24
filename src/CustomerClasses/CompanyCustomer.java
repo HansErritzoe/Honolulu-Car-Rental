@@ -1,6 +1,8 @@
 package CustomerClasses;
 
-public class CompanyCustomer extends Customer{
+import java.io.Serializable;
+
+public class CompanyCustomer extends Customer implements Serializable {
 
     protected String companyName;
     protected String companyAddress;
