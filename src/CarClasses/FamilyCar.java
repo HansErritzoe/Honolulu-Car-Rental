@@ -10,6 +10,7 @@ public class FamilyCar extends Car implements Serializable {
         this.seats = seats;
     }
 
+
     public int getSeats() {
         return seats;
     }

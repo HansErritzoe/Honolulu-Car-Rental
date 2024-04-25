@@ -20,6 +20,10 @@ public class Customer implements Serializable {
         this.setEmail(email);
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    //                      Getters and Setters below                     //
+    ////////////////////////////////////////////////////////////////////////
+
     public String getDriverName() {
         return driverName;
     }

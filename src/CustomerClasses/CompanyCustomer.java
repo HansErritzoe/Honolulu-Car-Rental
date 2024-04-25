@@ -17,6 +17,10 @@ public class CompanyCustomer extends Customer implements Serializable {
         this.crn = crn;
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    //                      Getters and Setters below                     //
+    ////////////////////////////////////////////////////////////////////////
+
     public String getCompanyName() {
         return companyName;
     }

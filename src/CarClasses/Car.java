@@ -24,6 +24,10 @@ public class Car implements Serializable {
         this.isAvailable = isAvailable;
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    //                      Getters and Setters below                     //
+    ////////////////////////////////////////////////////////////////////////
+
     public String getModel() {
         return model;
     }
