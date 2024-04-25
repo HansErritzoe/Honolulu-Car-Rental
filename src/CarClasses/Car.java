@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
 
-    protected String brandAndModel;
+    protected String brand;
+    protected String model;
     protected String fuelType;
     protected String registrationNumber;
     protected int registrationYearMonth;
@@ -12,8 +13,9 @@ public class Car implements Serializable {
     protected boolean automaticGear;
     protected boolean isAvailable;
 
-    public Car(String brandAndModel, String fuelType, String registrationNumber, int registrationYearMonth, int odoMeter, boolean automaticGear, boolean isAvailable) {
-        this.brandAndModel = brandAndModel;
+    public Car(String brand, String model, String fuelType, String registrationNumber, int registrationYearMonth, int odoMeter, boolean automaticGear, boolean isAvailable) {
+        this.brand = brand;
+        this.model = model;
         this.fuelType = fuelType;
         this.registrationNumber = registrationNumber;
         this.registrationYearMonth = registrationYearMonth;
@@ -22,15 +24,23 @@ public class Car implements Serializable {
         this.isAvailable = isAvailable;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     public Car(){
     }
 
-    public String getBrandAndModel() {
-        return brandAndModel;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setBrandAndModel(String brandAndModel) {
-        this.brandAndModel = brandAndModel;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getFuelType() {
