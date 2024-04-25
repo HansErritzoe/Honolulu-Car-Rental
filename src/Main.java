@@ -10,6 +10,7 @@ public class Main {
 
 //    public static ArrayList<RentalContracts> rentalContracts = ... FileHandler.getRentalcontract();
     public static ArrayList<Car> rentalCars = FileHandler.readCarsFromFile(); //loads cars from File on Startup
+    public static ArrayList<Customer> customerList = FileHandler.readCustomersFromFile();
     public static Scanner userInput = new Scanner(System.in);
     public static void main(String[] args){
 
@@ -22,7 +23,14 @@ public class Main {
         for(Car car : rentalCars){
             System.out.println(car.getBrand());
         }*/
-        UI.welcomeMessage();
-        UI.mainMenu();
+        /*PrivateCustomer ctest1 = new PrivateCustomer("Bobby Bobsen","Bobsalley 12", 2500, "Honolulu", 25503425, "bobbyBobsen123@hotmail.com",123456789, LocalDate.now());
+        Customer ctest2 = new Customer("Johnny Bobsen", "BObbyvej 12",2600,"Hanoi",342342343,"JohnB@email.com");
+        Collections.addAll(customerList,ctest1,ctest2); */
+        for(Customer cust : customerList){
+            System.out.println(cust.getDriverName());
+        }
+        //FileHandler.writeCustomersToFile(customerList);
+        //UI.welcomeMessage();
+        //UI.mainMenu();
     }
 }

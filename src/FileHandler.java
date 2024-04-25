@@ -1,4 +1,5 @@
 import CarClasses.*;
+import CustomerClasses.Customer;
 
 import java.io.*;
 import java.sql.Array;
@@ -36,6 +37,37 @@ public class FileHandler {
             return new ArrayList<Car>();
         }
     }
+
+    //writes ArrayList of Customer objects to file
+    public static void writeCustomersToFile(ArrayList<Customer> customerList){
+        try  {
+            ObjectOutputStream outPutStream = new ObjectOutputStream(new FileOutputStream("src/Files/customerList.ser",false));
+            outPutStream.writeObject(customerList);
+            System.out.println("Customer's saved to customerList.ser"); //slettes når vi sikrer på virker
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //loads ArrayList of Customers from file
+    public static ArrayList<Customer> readCustomersFromFile(){
+        if ((!fileIsEmpty("src/Files/customerList.ser"))) {
+            try {
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/Files/customerList.ser"));
+                ArrayList<Customer> loadedcustomers = (ArrayList<Customer>) objectInputStream.readObject();
+                System.out.println("customerList loaded from customerList.ser:"); //slettes når vi er sikrer på virker
+                return loadedcustomers;
+            } catch (IOException | ClassNotFoundException e){
+                e.printStackTrace();
+                System.out.println("Couldn't load customerList file"); //slettes bare når vi er sikre på virker
+                return null;
+            }
+        } else {
+            System.out.println("src/Files/customerList.ser is empty");
+            return new ArrayList<Customer>();
+        }
+    }
+
 
     //method for checking if Files are empty before attempting to reading from them
     public static Boolean fileIsEmpty(String filepath){
