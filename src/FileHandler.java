@@ -67,6 +67,35 @@ public class FileHandler {
             return new ArrayList<Customer>();
         }
     }
+    //writes RentalContract ArrayList to file
+    public static void writeRentalContractsToFile(ArrayList<RentalContract> rentalContractsList){
+        try  {
+            ObjectOutputStream outPutStream = new ObjectOutputStream(new FileOutputStream("src/Files/rentalContract.ser",false));
+            outPutStream.writeObject(rentalContractsList);
+            System.out.println("RentalContracts saved to rentalContract.ser"); //slettes når vi sikrer på virker
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //loads ArrayList of RentalContracts from File
+    public static ArrayList<RentalContract> readRentalContractsFromFile(){
+        if ((!fileIsEmpty("src/Files/rentalContract.ser"))) {
+            try {
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/Files/rentalContract.ser"));
+                ArrayList<RentalContract> rentalContracts = (ArrayList<RentalContract>) objectInputStream.readObject();
+                System.out.println("rentalContracts loaded from rentalContract.ser:"); //slettes når vi er sikrer på virker
+                return rentalContracts;
+            } catch (IOException | ClassNotFoundException e){
+                e.printStackTrace();
+                System.out.println("Couldn't load rentalContract file"); //slettes bare når vi er sikre på virker
+                return null;
+            }
+        } else {
+            System.out.println("src/Files/rentalContract.ser is empty");
+            return new ArrayList<RentalContract>();
+        }
+    }
 
 
     //method for checking if Files are empty before attempting to reading from them
