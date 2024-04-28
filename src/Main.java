@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -64,5 +65,53 @@ public class Main {
             System.out.println(r.getRentedCars().get(0).getModel());
         }
          */
+    }
+
+    public static void registerRental(){
+        try {
+         //   RentalContract temp = new RentalContract();
+        }catch (InputMismatchException ignored){
+            userInput.nextLine();
+            UI.mainMenu();
+        }
+    }
+    public static void registerCar(){
+        try {
+            System.out.println("Enter car details:");
+            System.out.print("Brand: ");
+            String brand = userInput.next();
+            System.out.print("Model: ");
+            String model = userInput.nextLine();
+
+            System.out.print("Fuel type: ");
+            String fuelType = userInput.nextLine();
+
+            System.out.print("Registration number: ");
+            String registrationNumber = userInput.nextLine();
+
+            System.out.print("Registration year and month (e.g., 2022): ");
+            int registrationYearMonth = userInput.nextInt();
+
+            System.out.print("Odometer reading: ");
+            int odoMeter = userInput.nextInt();
+
+            System.out.print("Automatic gear (true/false): ");
+            boolean automaticGear = userInput.nextBoolean();
+
+            System.out.print("Available (true/false): ");
+            boolean isAvailable = userInput.nextBoolean();
+
+            }catch (InputMismatchException ignored){
+            userInput.nextLine();
+            UI.mainMenu();
+        }
+    }
+    public static void registerCustomer(){
+        try {
+
+        }catch (InputMismatchException ignored){
+            userInput.nextLine();
+            UI.mainMenu();
+        }
     }
 }

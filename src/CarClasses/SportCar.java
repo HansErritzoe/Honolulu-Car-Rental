@@ -9,7 +9,10 @@ public class SportCar extends Car implements Serializable {
         super(brand, model, fuelType, registrationNumber, registrationYearMonth, odoMeter, automaticGear, isAvailable);
         this.horsePower = horsePower;
     }
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
     public int getHorsePower() {
         return horsePower;
     }

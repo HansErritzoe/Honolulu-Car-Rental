@@ -10,6 +10,10 @@ public class FamilyCar extends Car implements Serializable {
         this.seats = seats;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
     public int getSeats() {
         return seats;

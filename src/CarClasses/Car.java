@@ -24,6 +24,10 @@ public class Car implements Serializable {
         this.isAvailable = isAvailable;
     }
 
+    @Override
+    public String toString() {
+        return "Brand:"+brand;
+    }
     ////////////////////////////////////////////////////////////////////////
     //                      Getters and Setters below                     //
     ////////////////////////////////////////////////////////////////////////

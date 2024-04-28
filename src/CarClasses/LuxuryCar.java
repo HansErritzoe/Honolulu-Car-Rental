@@ -9,7 +9,10 @@ public class LuxuryCar extends Car implements Serializable {
         super(brand, model, fuelType, registrationNumber, registrationYearMonth, odoMeter, automaticGear, isAvailable);
         this.ccm = ccm;
     }
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
     public int getCcm() {
         return ccm;
     }
