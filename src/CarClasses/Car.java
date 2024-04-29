@@ -1,6 +1,7 @@
 package CarClasses;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Car implements Serializable {
 
@@ -8,12 +9,12 @@ public class Car implements Serializable {
     protected String model;
     protected String fuelType;
     protected String registrationNumber;
-    protected int registrationYearMonth;
+    protected LocalDate registrationYearMonth;
     protected int odoMeter;
     protected boolean automaticGear;
     protected boolean isAvailable;
 
-    public Car(String brand, String model, String fuelType, String registrationNumber, int registrationYearMonth, int odoMeter, boolean automaticGear, boolean isAvailable) {
+    public Car(String brand, String model, String fuelType, String registrationNumber, LocalDate registrationYearMonth, int odoMeter, boolean automaticGear, boolean isAvailable) {
         this.brand = brand;
         this.model = model;
         this.fuelType = fuelType;
@@ -67,11 +68,11 @@ public class Car implements Serializable {
         this.registrationNumber = registrationNumber;
     }
 
-    public int getRegistrationYearMonth() {
+    public LocalDate getRegistrationYearMonth() {
         return registrationYearMonth;
     }
 
-    public void setRegistrationYearMonth(int registrationYearMonth) {
+    public void setRegistrationYearMonth(LocalDate registrationYearMonth) {
         this.registrationYearMonth = registrationYearMonth;
     }
 

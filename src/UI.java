@@ -32,12 +32,7 @@ public class UI {
                         break;
                     case 5:
                         System.out.println("Test 5");
-                        break;
-                    case 6:
-                        System.out.println("Test 6");
-                        break;
-                    case 7:
-                        System.out.println("Test 7");
+                        removeMenu();
                         break;
                 }
             }
@@ -89,6 +84,33 @@ public class UI {
                     break;
                 case 3:
                     System.out.println("Test 3");
+                    Main.registerCustomer();
+                    break;
+            }
+        }catch (InputMismatchException ignored){
+            Main.userInput.nextLine();
+            mainMenu();
+        }
+    }
+
+    public static void removeMenu(){
+        int answer;
+        try {
+            System.out.println();
+            System.out.println("===============================================");
+            System.out.println("      Input a number to select an option       ");
+            System.out.println("===============================================");
+            System.out.println("  type 1: Remove a Car                         ");
+            System.out.println("  type 2: Remove a Customer                    ");
+            System.out.println("  type 0: To return to the main menu           ");
+            answer = Main.userInput.nextInt();
+            switch (answer) {
+                case 1:
+                    Main.removeCar();
+                    break;
+                case 2:
+                    System.out.println("Test 3");
+                    Main.removeCustomer();
                     break;
             }
         }catch (InputMismatchException ignored){
