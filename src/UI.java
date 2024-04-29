@@ -1,13 +1,5 @@
-import CarClasses.Car;
-import CustomerClasses.Customer;
-
-import CarClasses.Car;
-import CarClasses.LuxuryCar;
-import CarClasses.SportCar;
-import CustomerClasses.CompanyCustomer;
-import CustomerClasses.Customer;
-import CustomerClasses.PrivateCustomer;
-
+import CarClasses.*;
+import CustomerClasses.*;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 
@@ -76,10 +68,8 @@ public class UI {
             System.out.println("          =\\_/ __ \\_\\_______|_/ __ \\__D");
             System.out.println("_______________(__)_____________(__)___________");
             Thread.sleep(2000);
-        } catch (Exception error) {
-            error.printStackTrace();
+        } catch (Exception ignored) {
         }
-
     }
 
     public static void createMenu(){
