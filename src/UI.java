@@ -1,6 +1,7 @@
 import CarClasses.*;
 import CustomerClasses.*;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.InputMismatchException;
 
 public class UI {
@@ -31,22 +32,7 @@ public class UI {
                         System.out.println("Test 3");
                         break;
                     case 4:
-                        System.out.println("Test 4");
-                         for(Car car : Main.rentalCars){
-                            System.out.println();
-                            System.out.println(car.toString());
-                            System.out.println();
-                        }
-                         for(Customer cust : Main.customerList){
-                            System.out.println();
-                            System.out.println(cust.toString());
-                            System.out.println();
-                        }
-                        for(RentalContract rental : Main.rentalContracts){
-                            System.out.println();
-                            System.out.println(rental.toString());
-                            System.out.println();
-                        }
+                        viewAllSubMenu();
                         break;
                     case 5:
                         System.out.println("Test 5");
@@ -73,7 +59,7 @@ public class UI {
             System.out.println("           /  ____ \\ <>     |  ____  \\");
             System.out.println("          =\\_/ __ \\_\\_______|_/ __ \\__D");
             System.out.println("_______________(__)_____________(__)___________");
-            Thread.sleep(2000);
+            //Thread.sleep(2000); //uncomment at launch!
         } catch (Exception ignored) {
         }
     }
@@ -249,6 +235,310 @@ public class UI {
         } catch (InputMismatchException ignored) {
             Main.userInput.nextLine();
             mainMenu();
+        }
+    }
+
+    //displays submenu where user can select if they want to view registered cars, customers or rental contracts
+    public static void viewAllSubMenu(){
+        System.out.println();
+        System.out.println("               View all Submenu                ");
+        System.out.println("===============================================");
+        System.out.println("      Input a number to select an option       ");
+        System.out.println("===============================================");
+        System.out.println("  type 1: View cars                 ");
+        System.out.println("  type 2: View customers            ");
+        System.out.println("  type 3: View rental contracts     ");
+        System.out.println("  type 0: To return to the main menu           ");
+        try {
+            int answer = Main.userInput.nextInt();
+            switch(answer){
+                case 1:
+                    viewCarsMenu();
+                    break;
+                case 2:
+                    viewCustomersMenu();
+                    break;
+                case 3:
+                    viewRentalContractsMenu();
+                    break;
+                case 0:
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println();
+                    System.out.println("Invalid Choice");
+                    System.out.println("Try again");
+                    viewAllSubMenu();
+                    break;
+            }
+        } catch (Exception ignored) {
+            Main.userInput.nextLine();
+            System.out.println();
+            System.out.println("Invalid Input");
+            System.out.println("Try again");
+            System.out.println();
+            viewAllSubMenu();
+        }
+    }
+
+    //submenu where user can select how they want the Rental Contracts displayed
+    private static void viewRentalContractsMenu() {
+        System.out.println();
+        System.out.println("           View Rental Contracts Menu          ");
+        System.out.println("===============================================");
+        System.out.println("      Input a number to select an option       ");
+        System.out.println("===============================================");
+        System.out.println("  type 1: View all Rental Contracts            ");
+        System.out.println("  type 2: Search by ID                         ");
+        System.out.println("  type 3: Search by Customer name              ");
+        System.out.println("  type 0: To return to the main menu           ");
+        try {
+            int answer = Main.userInput.nextInt();
+            switch(answer){
+                case 1: //print all
+                    Collections.sort(Main.rentalContracts);
+                    System.out.println();
+                    for(RentalContract rentalContract : Main.rentalContracts){
+                        System.out.println(rentalContract);
+                        System.out.println();
+                    }
+                    break;
+                case 2: //search by ID
+                    System.out.println("Input Contract ID");
+                    int id = Main.userInput.nextInt();
+                    int count = 0;
+                    for(RentalContract rentalContract : Main.rentalContracts){
+                        if (rentalContract.getContractID() == id) {
+                            System.out.println();
+                            System.out.println(rentalContract);
+                            System.out.println();
+                            count++;
+                        }
+                    }
+                    if(count == 0){
+                        System.out.println();
+                        System.out.println("Sorry no Rental Contract with that ID in our files");
+                        System.out.println();
+                        viewRentalContractsMenu();
+                    }
+                    break;
+                case 3: //search by customer name
+                    Main.userInput.nextLine();
+                    System.out.println("Input customer name");
+                    String name = Main.userInput.nextLine();
+                    int count2 = 0;
+                    for(RentalContract rentalContract : Main.rentalContracts){
+                        if (rentalContract.getCustomer().getDriverName().toLowerCase().equals(name.toLowerCase())) {
+                            System.out.println();
+                            System.out.println(rentalContract);
+                            System.out.println();
+                            count2++;
+                        }
+                    }
+                    if(count2 == 0){
+                        System.out.println();
+                        System.out.println("Sorry no Rental Contract with a customer with that name in our files");
+                        System.out.println();
+                        viewCustomersMenu();
+                    }
+                    break;
+                case 0:
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println();
+                    System.out.println("Invalid Choice");
+                    System.out.println("Try again");
+                    System.out.println();
+                    viewRentalContractsMenu();
+                    break;
+
+            }
+        } catch (Exception ignored) {
+            Main.userInput.nextLine();
+            System.out.println();
+            System.out.println("Invalid Input");
+            System.out.println("Try again");
+            System.out.println();
+            viewRentalContractsMenu();
+        }
+    }
+
+    //submenu where user can select how they want customers displayed or search by name
+    private static void viewCustomersMenu() {
+        System.out.println();
+        System.out.println("            View All Customers menu         ");
+        System.out.println("===============================================");
+        System.out.println("      Input a number to select an option       ");
+        System.out.println("===============================================");
+        System.out.println("  type 1: View all customers alphabetically    ");
+        System.out.println("  type 2: View all Private Customers           ");
+        System.out.println("  type 3: View all Company Customers           ");
+        System.out.println("  type 4: Search Customer by name              ");
+        System.out.println("  type 0: To return to the main menu           ");
+        try {
+            int answer = Main.userInput.nextInt();
+            switch(answer){
+                case 1: //print all customers alphabetically
+                    Collections.sort(Main.customerList);
+                    System.out.println();
+                    for(Customer customer : Main.customerList){
+                        System.out.println(customer);
+                        System.out.println();
+                    }
+                    break;
+                case 2://view all Private customers
+                    Collections.sort(Main.customerList);
+                    System.out.println();
+                    for(Customer customer : Main.customerList){
+                        if(customer instanceof PrivateCustomer) {
+                            System.out.println(customer);
+                            System.out.println();
+                        }
+                    }
+                    break;
+                case 3: //view all Company customers
+                    Collections.sort(Main.customerList);
+                    System.out.println();
+                    for(Customer customer : Main.customerList){
+                        if(customer instanceof CompanyCustomer) {
+                            System.out.println(customer);
+                            System.out.println();
+                        }
+                    }
+                    break;
+                case 4: //search by name
+                    System.out.println("Input full name of customer");
+                    Main.userInput.nextLine();//clears scanner from int
+                    String input = Main.userInput.nextLine();
+                    int count = 0;
+                    for(Customer customer : Main.customerList){
+                        if (customer.getDriverName().toLowerCase().equals(input.toLowerCase())) {
+                            System.out.println();
+                            System.out.println(customer);
+                            System.out.println();
+                            count++;
+                        }
+                    }
+                    if(count == 0){ //if no customers were found
+                        System.out.println();
+                        System.out.println("Sorry no customer by that name in our files");
+                        System.out.println();
+                        viewCustomersMenu();
+                    }
+                    break;
+                case 0:
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println();
+                    System.out.println("Invalid Choice");
+                    System.out.println("Try again");
+                    viewCustomersMenu();
+                    break;
+            }
+        } catch (Exception ignored) {
+            Main.userInput.nextLine();
+            System.out.println();
+            System.out.println("Invalid Input");
+            System.out.println("Try again");
+            System.out.println();
+            viewCustomersMenu();
+        }
+    }
+
+    //submenu where user can select which cars they want displayed
+    private static void viewCarsMenu() {
+        System.out.println();
+        System.out.println("               View All Cars menu              ");
+        System.out.println("===============================================");
+        System.out.println("      Input a number to select an option       ");
+        System.out.println("===============================================");
+        System.out.println("  type 1: View all cars alphabetically         ");
+        System.out.println("  type 2: View only available cars             ");
+        System.out.println("  type 3: View only available Normal Cars      ");
+        System.out.println("  type 4: View only available Family Cars      ");
+        System.out.println("  type 5: View only available Sports Cars      ");
+        System.out.println("  type 6: View only available Luxury Cars      ");
+        System.out.println("  type 0: To return to the main menu           ");
+        try {
+            int answer = Main.userInput.nextInt();
+            switch(answer){
+                case 1: //all cars alphabetically
+                    Collections.sort(Main.rentalCars);
+                    System.out.println();
+                    for(Car car : Main.rentalCars){
+                        System.out.println();
+                        System.out.println(car.toString());
+                    }
+                    break;
+                case 2: //only available cars
+                    Collections.sort(Main.rentalCars);
+                    System.out.println();
+                    for(Car car : Main.rentalCars){
+                        if(car.isAvailable()) {
+                            System.out.println();
+                            System.out.println(car);
+                        }
+                    }
+                    break;
+                case 3: //only available normal cars
+                    Collections.sort(Main.rentalCars);
+                    System.out.println();
+                    for(Car car : Main.rentalCars){
+                        if(car.isAvailable() && !(car instanceof FamilyCar) && !(car instanceof SportCar) && !(car instanceof LuxuryCar)) {
+                            System.out.println() ;
+                            System.out.println(car);
+                        }
+                    }
+                    break;
+                case 4: //only available Family Cars
+                    Collections.sort(Main.rentalCars);
+                    System.out.println();
+                    for(Car car : Main.rentalCars){
+                        if(car.isAvailable() && car instanceof FamilyCar) {
+                            System.out.println();
+                            System.out.println(car);
+                        }
+                    }
+                    break;
+                case 5: //only available sports Cars
+                    Collections.sort(Main.rentalCars);
+                    System.out.println();
+                    for(Car car : Main.rentalCars){
+                        if(car.isAvailable() && car instanceof SportCar) {
+                            System.out.println();
+                            System.out.println(car);
+                        }
+                    }
+                    break;
+                case 6: //only available Luxury Cars
+                    Collections.sort(Main.rentalCars);
+                    System.out.println();
+                    for(Car car : Main.rentalCars){
+                        if(car.isAvailable() && car instanceof LuxuryCar) {
+                            System.out.println();
+                            System.out.println(car);
+                        }
+                    }
+                    break;
+                case 0:
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println();
+                    System.out.println("Invalid Choice");
+                    System.out.println("Try again");
+                    viewCarsMenu();
+                    break;
+            }
+        } catch (Exception ignored) {
+            Main.userInput.nextLine();
+            System.out.println();
+            System.out.println("Invalid Input");
+            System.out.println("Try again");
+            System.out.println();
+            viewCarsMenu();
         }
     }
 
