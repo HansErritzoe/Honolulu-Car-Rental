@@ -1,3 +1,6 @@
+import CarClasses.Car;
+import CustomerClasses.Customer;
+
 import java.util.InputMismatchException;
 
 public class UI {
@@ -29,6 +32,15 @@ public class UI {
                         break;
                     case 4:
                         System.out.println("Test 4");
+                        for(Car car : Main.rentalCars){
+                            System.out.println(car.getBrand());
+                        }
+                        for(Customer cust : Main.customerList){
+                            System.out.println(cust.getDriverName());
+                        }
+                        for(RentalContract rental : Main.rentalContracts){
+                            System.out.println(rental.getContractID());
+                        }
                         break;
                     case 5:
                         System.out.println("Test 5");
