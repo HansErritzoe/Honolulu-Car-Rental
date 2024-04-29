@@ -20,6 +20,23 @@ public class Customer implements Serializable {
         this.setEmail(email);
     }
 
+    @Override
+    public String toString() {
+        String customerType;
+        if(this instanceof PrivateCustomer){
+            customerType = "Private";
+        } else {
+            customerType = "Company";
+        }
+        return  "Customer Name: " +driverName + "\n" +
+                "Customer Type: " + customerType + "\n" +
+                "Address: " + address + ", " + postalCode + " " + city + "\n" +
+                "Mobile Phone: " + phoneNumber + "\n" +
+                "Email: " + email
+                ;
+
+    }
+
     ////////////////////////////////////////////////////////////////////////
     //                      Getters and Setters below                     //
     ////////////////////////////////////////////////////////////////////////

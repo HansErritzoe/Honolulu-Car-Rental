@@ -13,6 +13,13 @@ public class PrivateCustomer extends Customer implements Serializable {
         this.licenseNumber = licenseNumber;
         this.releaseDate = releaseDate;
     }
+    @Override
+    public String toString(){
+        return super.toString() + "\n" +
+                "Driver License Number: " + licenseNumber + "\n" +
+                "Driver License Release Date: " + releaseDate
+                ;
+    }
 
     public int getLicenseNumber() {
         return licenseNumber;

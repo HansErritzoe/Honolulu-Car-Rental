@@ -3,6 +3,7 @@ import CustomerClasses.Customer;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class RentalContract implements Serializable {
     protected int contractID;
@@ -24,6 +25,24 @@ public class RentalContract implements Serializable {
         this.customer = customer;
         this.price = price;
     }
+
+    public String toString(){
+        //formats the time to desired output first
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm");
+        String formattedStartTime = startTime.format(formatter);
+        String formattedEndTime = endTime.format(formatter);
+
+        return "Rental Contract ID: " + contractID + "\n" +
+                "Customer: " + customer.getDriverName() + "\n" +
+                "Car rented: " + rentedCars.getBrand() +" " + rentedCars.getModel() + "\n" +
+                "Total Price: $" + price + "\n" +
+                "Start Time: " + formattedStartTime + "\n" +
+                "End Time: " + formattedEndTime + "\n" +
+                "Car Start Miles: " + startKM +"\n" +
+                "Car Max Miles: " + maxKM
+                ;
+    }
+
     ////////////////////////////////////////////////////////////////////////
     //                      Getters and Setters below                     //
     ////////////////////////////////////////////////////////////////////////

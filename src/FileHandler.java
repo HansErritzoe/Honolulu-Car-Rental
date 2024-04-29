@@ -70,9 +70,9 @@ public class FileHandler {
     //writes RentalContract ArrayList to file
     public static void writeRentalContractsToFile(ArrayList<RentalContract> rentalContractsList){
         try  {
-            ObjectOutputStream outPutStream = new ObjectOutputStream(new FileOutputStream("src/Files/rentalContract.ser",false));
+            ObjectOutputStream outPutStream = new ObjectOutputStream(new FileOutputStream("src/Files/rentalContracts.ser",false));
             outPutStream.writeObject(rentalContractsList);
-            System.out.println("RentalContracts saved to rentalContract.ser"); //slettes når vi sikrer på virker
+            System.out.println("RentalContracts saved to rentalContracts.ser"); //slettes når vi sikrer på virker
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,19 +80,19 @@ public class FileHandler {
 
     //loads ArrayList of RentalContracts from File
     public static ArrayList<RentalContract> readRentalContractsFromFile(){
-        if ((!fileIsEmpty("src/Files/rentalContract.ser"))) {
+        if ((!fileIsEmpty("src/Files/rentalContracts.ser"))) {
             try {
-                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/Files/rentalContract.ser"));
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src/Files/rentalContracts.ser"));
                 ArrayList<RentalContract> rentalContracts = (ArrayList<RentalContract>) objectInputStream.readObject();
-                System.out.println("rentalContracts loaded from rentalContract.ser:"); //slettes når vi er sikrer på virker
+                System.out.println("rentalContracts loaded from rentalContracts.ser:"); //slettes når vi er sikrer på virker
                 return rentalContracts;
             } catch (IOException | ClassNotFoundException e){
                 e.printStackTrace();
-                System.out.println("Couldn't load rentalContract file"); //slettes bare når vi er sikre på virker
+                System.out.println("Couldn't load rentalContracts file"); //slettes bare når vi er sikre på virker
                 return null;
             }
         } else {
-            System.out.println("src/Files/rentalContract.ser is empty");
+            System.out.println("src/Files/rentalContracts.ser is empty");
             return new ArrayList<RentalContract>();
         }
     }

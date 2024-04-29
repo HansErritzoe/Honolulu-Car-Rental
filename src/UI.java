@@ -32,14 +32,20 @@ public class UI {
                         break;
                     case 4:
                         System.out.println("Test 4");
-                        for(Car car : Main.rentalCars){
-                            System.out.println(car.getBrand());
+                         for(Car car : Main.rentalCars){
+                            System.out.println();
+                            System.out.println(car.toString());
+                            System.out.println();
                         }
-                        for(Customer cust : Main.customerList){
-                            System.out.println(cust.getDriverName());
+                         for(Customer cust : Main.customerList){
+                            System.out.println();
+                            System.out.println(cust.toString());
+                            System.out.println();
                         }
                         for(RentalContract rental : Main.rentalContracts){
-                            System.out.println(rental.getContractID());
+                            System.out.println();
+                            System.out.println(rental.toString());
+                            System.out.println();
                         }
                         break;
                     case 5:

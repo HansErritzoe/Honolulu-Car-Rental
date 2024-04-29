@@ -25,10 +25,43 @@ public class Car implements Serializable {
         this.isAvailable = isAvailable;
     }
 
+
     @Override
     public String toString() {
-        return "Brand: "+brand;
+        String gear ;
+        String availability;
+        String carType;
+        if(this instanceof FamilyCar){
+            carType = "Family Car";
+        } else if(this instanceof SportCar){
+            carType = "Sports Car";
+        } else if (this instanceof LuxuryCar){
+            carType = "Luxury Car";
+        } else {
+            carType = "Normal Car";
+        }
+        if(automaticGear){
+            gear = "Automatic Gear";
+        } else {
+            gear = "Manual Gear";
+        }
+        if(isAvailable){
+            availability = "Available";
+        } else {
+            availability = "Unavailable";
+        }
+
+        return  brand + " " + model + "\n" +
+                "Category: " + carType + "\n" +
+                gear + "\n" +
+                "Fuel: " + fuelType + "\n" +
+                "Registration Date: " + registrationYearMonth + "\n" +
+                "License Plate: \"" + registrationNumber + "\"\n" +
+                "Miles' driven: " + odoMeter + "\n" +
+                availability + " for rent"
+        ;
     }
+
     ////////////////////////////////////////////////////////////////////////
     //                      Getters and Setters below                     //
     ////////////////////////////////////////////////////////////////////////

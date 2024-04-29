@@ -12,7 +12,8 @@ public class LuxuryCar extends Car implements Serializable {
     }
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() + "\n" +
+                "CCM Number: " + ccm;
     }
     public int getCcm() {
         return ccm;

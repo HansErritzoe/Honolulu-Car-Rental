@@ -17,6 +17,17 @@ public class CompanyCustomer extends Customer implements Serializable {
         this.crn = crn;
     }
 
+    @Override
+    public String toString(){
+        return super.toString() + "\n" +
+                "Company Name: " + companyName + "\n" +
+                "Company Address: " + companyAddress + "\n" +
+                "Company Phone: " + companyPhone + "\n" +
+                "Company CRN Number: " + crn
+                ;
+    }
+
+
     ////////////////////////////////////////////////////////////////////////
     //                      Getters and Setters below                     //
     ////////////////////////////////////////////////////////////////////////

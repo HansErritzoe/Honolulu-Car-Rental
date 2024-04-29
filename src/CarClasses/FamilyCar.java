@@ -13,7 +13,8 @@ public class FamilyCar extends Car implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() + "\n" +
+                "Number of seats: " + seats;
     }
 
     public int getSeats() {

@@ -12,7 +12,8 @@ public class SportCar extends Car implements Serializable {
     }
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() + "\n" +
+                "Horsepower: " + horsePower;
     }
     public int getHorsePower() {
         return horsePower;
