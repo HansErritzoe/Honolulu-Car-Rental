@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class RentalContract implements Serializable {
+public class RentalContract implements Serializable, Comparable<RentalContract> {
     protected int contractID;
     protected LocalDateTime startTime;
     protected LocalDateTime endTime;
@@ -24,6 +24,11 @@ public class RentalContract implements Serializable {
         this.rentedCars = rentedCars;
         this.customer = customer;
         this.price = price;
+    }
+
+    //compareTo method for sorting Rental Contracts based on ID, lowest ID comes first.
+    public int compareTo(RentalContract other){
+        return this.contractID-other.contractID;
     }
 
     public String toString(){

@@ -3,7 +3,7 @@ package CarClasses;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Car implements Serializable {
+public class Car implements Serializable, Comparable<Car> {
 
     protected String brand;
     protected String model;
@@ -23,6 +23,17 @@ public class Car implements Serializable {
         this.odoMeter = odoMeter;
         this.automaticGear = automaticGear;
         this.isAvailable = isAvailable;
+    }
+
+    //compareTo method for sorting Cars
+    //sorts by Brand first if not the same, otherwise sorts by Model
+    public int compareTo(Car other){
+        //if not same brand, sort by brand name
+        if(!this.brand.equals(other.brand)){
+            return this.brand.compareTo(other.brand);
+        } else { //sort by model name
+            return this.model.compareTo(other.model);
+        }
     }
 
 

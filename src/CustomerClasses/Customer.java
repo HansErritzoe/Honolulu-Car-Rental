@@ -2,7 +2,7 @@ package CustomerClasses;
 
 import java.io.Serializable;
 
-public class Customer implements Serializable {
+public class Customer implements Serializable,Comparable<Customer> {
 
     protected String driverName;
     protected String address;
@@ -18,6 +18,11 @@ public class Customer implements Serializable {
         this.setCity(city);
         this.setPhoneNumber(phoneNumber);
         this.setEmail(email);
+    }
+
+    //compareTo method to sort Customers by name
+    public int compareTo(Customer other){
+        return this.driverName.compareTo(other.driverName);
     }
 
     @Override
