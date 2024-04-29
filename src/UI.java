@@ -1,6 +1,14 @@
 import CarClasses.Car;
 import CustomerClasses.Customer;
 
+import CarClasses.Car;
+import CarClasses.LuxuryCar;
+import CarClasses.SportCar;
+import CustomerClasses.CompanyCustomer;
+import CustomerClasses.Customer;
+import CustomerClasses.PrivateCustomer;
+
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 
 public class UI {
@@ -88,15 +96,15 @@ public class UI {
             answer = Main.userInput.nextInt();
             switch (answer) {
                 case 1:
-                    Main.registerRental();
+                    registerRental();
                     break;
                 case 2:
                     System.out.println("Test 2");
-                    Main.registerCar();
+                    registerCar();
                     break;
                 case 3:
                     System.out.println("Test 3");
-                    Main.registerCustomer();
+                    registerCustomer();
                     break;
             }
         }catch (InputMismatchException ignored){
@@ -118,16 +126,145 @@ public class UI {
             answer = Main.userInput.nextInt();
             switch (answer) {
                 case 1:
-                    Main.removeCar();
+                    removeCar();
                     break;
                 case 2:
                     System.out.println("Test 3");
-                    Main.removeCustomer();
+                    removeCustomer();
                     break;
             }
         }catch (InputMismatchException ignored){
             Main.userInput.nextLine();
             mainMenu();
         }
+    }
+    ////////////////////////////////////////////////////////////////////////
+    //                      register Object below                         //
+    ////////////////////////////////////////////////////////////////////////
+
+    public static void registerRental(){
+        try {
+
+        }catch (InputMismatchException ignored){
+            Main.userInput.nextLine();
+            mainMenu();
+        }
+    }
+
+    public static void registerCar(){
+        try {
+            System.out.println("Enter car details:");
+            System.out.print("Brand: ");
+            String brand = Main.userInput.next();
+            System.out.print("Model: ");
+            String model = Main.userInput.next();
+
+            System.out.print("Fuel type: ");
+            String fuelType = Main.userInput.next();
+
+            System.out.print("Registration number: ");
+            String registrationNumber = Main.userInput.next();
+
+            System.out.print("Odometer reading: ");
+            int odoMeter = Main.userInput.nextInt();
+
+            System.out.print("Automatic gear (true/false): ");
+            boolean automaticGear = Main.userInput.nextBoolean();
+
+            System.out.println("Enter the car type\ntype 1: Family car\ntype 2: Luxury car\ntype 3: Sport car");
+            int carType = Main.userInput.nextInt();
+            Car tempcar = null;
+            switch(carType) {
+                case 1:
+                    System.out.println("How many seats does it have?");
+                    int seats = Main.userInput.nextInt();
+                    tempcar = new SportCar(brand, model, fuelType, registrationNumber, LocalDate.now().minusDays(0), odoMeter, automaticGear, true, seats);
+                    break;
+                case 2:
+                    System.out.println("What is the cmc of the car?");
+                    int cmc = Main.userInput.nextInt();
+                    tempcar = new LuxuryCar(brand, model, fuelType, registrationNumber, LocalDate.now().minusDays(0), odoMeter, automaticGear, true, cmc);
+                    break;
+                case 3:
+                    System.out.println("How many horsepower's does the car have?");
+                    int horsePower = Main.userInput.nextInt();
+                    tempcar = new SportCar(brand, model, fuelType, registrationNumber, LocalDate.now().minusDays(0), odoMeter, automaticGear, true, horsePower);
+                    break;
+                default:
+                    System.out.println("Invalid input. No car was registered");
+                    mainMenu();
+            }
+            if (tempcar != null) {
+                Main.rentalCars.add(tempcar);
+                System.out.println("The following car was added to the list: "+ tempcar);
+            }
+        }catch (InputMismatchException ignored){
+            Main.userInput.nextLine();
+            mainMenu();
+        }
+    }
+
+    public static void registerCustomer() {
+        try {
+            System.out.println("Enter driver details:");
+            System.out.println("Driver Name: ");
+            String driverName = Main.userInput.nextLine();
+            Main.userInput.nextLine();
+            System.out.println("Address: ");
+            String address = Main.userInput.nextLine();
+            System.out.print("Postal Code: ");
+            int postalCode = Main.userInput.nextInt();
+            Main.userInput.nextLine();
+            System.out.print("City: ");
+            String city = Main.userInput.nextLine();
+            System.out.print("Phone Number: ");
+            int phoneNumber = Main.userInput.nextInt();
+            Main.userInput.nextLine();
+            System.out.print("Email: ");
+            String email = Main.userInput.nextLine();
+            System.out.print("Enter driver type\n type 1: Private\n type 2: Company");
+            int driverType = Main.userInput.nextInt();
+            Customer tempCustomer = null;
+            if (driverType == 1) {
+                System.out.print("License Number: ");
+                int licenseNumber = Main.userInput.nextInt();
+                Main.userInput.nextLine();
+                System.out.print("Release Date (e.g YYYY-MM-DD): ");
+                String releaseDateStr = Main.userInput.nextLine();
+                LocalDate releaseDate = LocalDate.parse(releaseDateStr);
+                tempCustomer = new PrivateCustomer(driverName, address, postalCode, city, phoneNumber, email, licenseNumber, releaseDate);
+            } else if (driverType == 2) {
+                Main.userInput.nextLine();
+                System.out.print("Company Name: ");
+                String companyName = Main.userInput.nextLine();
+                Main.userInput.nextLine();
+                System.out.print("Company Address: ");
+                String companyAddress = Main.userInput.nextLine();
+                System.out.print("Company Phone Number: ");
+                int companyPhone = Main.userInput.nextInt();
+                System.out.print("Company Registration Number (CRN): ");
+                int crn = Main.userInput.nextInt();
+                tempCustomer = new CompanyCustomer(driverName, address, postalCode, city, phoneNumber, email, companyName, companyAddress, companyPhone, crn);
+            }
+            if(tempCustomer != null) {
+                Main.customerList.add(tempCustomer);
+                System.out.println("The following customer was added to the list: " + tempCustomer);
+            }
+        } catch (InputMismatchException ignored) {
+            Main.userInput.nextLine();
+            mainMenu();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    //                      Remove object below                           //
+    ////////////////////////////////////////////////////////////////////////
+
+    public static void removeCar(){
+
+    }
+
+    public static void removeCustomer(){
+
     }
 }

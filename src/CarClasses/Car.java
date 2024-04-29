@@ -27,7 +27,7 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "Brand:"+brand;
+        return "Brand: "+brand;
     }
     ////////////////////////////////////////////////////////////////////////
     //                      Getters and Setters below                     //

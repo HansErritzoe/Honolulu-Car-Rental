@@ -3,7 +3,6 @@ import CustomerClasses.Customer;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class RentalContract implements Serializable {
     protected int contractID;
@@ -11,11 +10,11 @@ public class RentalContract implements Serializable {
     protected LocalDateTime endTime;
     protected int maxKM;
     protected int startKM;
-    protected ArrayList<Car> rentedCars;
+    protected Car rentedCars;
     protected Customer customer;
     protected double price;
 
-    public RentalContract(int contractID, LocalDateTime startTime, LocalDateTime endTime, int maxKM, int startKM, ArrayList<Car> rentedCars, Customer customer, double price) {
+    public RentalContract(int contractID, LocalDateTime startTime, LocalDateTime endTime, int maxKM, int startKM, Car rentedCars, Customer customer, double price) {
         this.contractID = contractID;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -69,11 +68,11 @@ public class RentalContract implements Serializable {
         this.startKM = startKM;
     }
 
-    public ArrayList<Car> getRentedCars() {
+    public Car getRentedCars() {
         return rentedCars;
     }
 
-    public void setRentedCars(ArrayList<Car> rentedCars) {
+    public void setRentedCars(Car rentedCars) {
         this.rentedCars = rentedCars;
     }
 
