@@ -722,11 +722,10 @@ public class UI {
                 Main.userInput.nextLine();
             }
             String licensePlate;
-            Car tempCar;
+            Car tempCar = null;
             do { //do while car not found
                 System.out.println("Enter License Plate of the car you want to edit");
                 licensePlate = Main.userInput.nextLine();
-                tempCar = null;
                 int count = 0;
                 for(Car car : Main.rentalCars){
                     if(car.getRegistrationNumber().equalsIgnoreCase(licensePlate.toLowerCase())){
