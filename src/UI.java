@@ -721,157 +721,166 @@ public class UI {
             if(Main.userInput.hasNextLine()){ //clears scanner if already has input
                 Main.userInput.nextLine();
             }
-            System.out.println("Enter License Plate of the car you want to edit");
-            String licensePlate = Main.userInput.nextLine();
-            Car tempCar = null;
-            int count = 0;
-            for(Car car : Main.rentalCars){
-                if(car.getRegistrationNumber().equalsIgnoreCase(licensePlate.toLowerCase())){
-                    tempCar = car;
-                    count++;
+            String licensePlate;
+            Car tempCar;
+            do { //do while car not found
+                System.out.println("Enter License Plate of the car you want to edit");
+                licensePlate = Main.userInput.nextLine();
+                tempCar = null;
+                int count = 0;
+                for(Car car : Main.rentalCars){
+                    if(car.getRegistrationNumber().equalsIgnoreCase(licensePlate.toLowerCase())){
+                        tempCar = car;
+                        count++;
+                    }
                 }
-            }
-            if(count == 0){ //if no car found
-                System.out.println();
-                Main.userInput.nextLine(); //clearer scanneren
-                System.out.println("Sorry no Car found with that license plate");
-                System.out.println("            Try again");
-                editCar();
-                return;
-            } else { //else run rest of method
-                System.out.println("Car found with license plate: \"" + licensePlate+"\"");
-                System.out.println("  type 1: Edit Brand                          ");
-                System.out.println("  type 2: Edit Model                           ");
-                System.out.println("  type 3: Edit fuel type                       ");
-                System.out.println("  type 4: Edit License plate                   ");
-                System.out.println("  type 5: Edit Registration Date     ");
-                System.out.println("  type 6: Edit odoMeter                        ");
-                System.out.println("  type 7: Change manual/automatic gear         ");
-                System.out.println("  type 8: Change availability status           ");
-                if(tempCar instanceof FamilyCar){
-                    System.out.println("  type 9: Edit amount of seats             ");
-                } else if(tempCar instanceof LuxuryCar){
-                    System.out.println("  type 9: Edit CCM number                  ");
-                } else if(tempCar instanceof SportCar){
-                    System.out.println("  type 9: Edit horsepower                  ");
-                }
-                System.out.println("  type 0: To return to the main menu           ");
-                int answer = Main.userInput.nextInt();
-                Main.userInput.nextLine();
-                switch(answer){ //switch for changing the specific field
-                    case 1://brand
-                        System.out.println("This car's current brand = \""+tempCar.getBrand()+"\"");
-                        System.out.println("Enter new brand name");
-                        String newBrand = Main.userInput.nextLine();
-                        tempCar.setBrand(newBrand);
-                        System.out.println("Change accepted, car now looks like this:");
-                        printCarNicely(tempCar);
-                        break;
-                    case 2://model
-                        System.out.println("This car's current model = \""+tempCar.getModel()+"\"");
-                        System.out.println("Enter new model name");
-                        String newModel = Main.userInput.nextLine();
-                        tempCar.setModel(newModel);
-                        System.out.println("Change accepted, car now looks like this:");
-                        printCarNicely(tempCar);
-                        break;
-                    case 3://fuel type
-                        System.out.println("This car's current fuel type = \""+tempCar.getFuelType()+"\"");
-                        System.out.println("Enter new fuel type");
-                        String newFuelType = Main.userInput.nextLine();
-                        tempCar.setFuelType(newFuelType);
-                        System.out.println("Change accepted, car now looks like this:");
-                        printCarNicely(tempCar);
-                        break;
-                    case 4://license plate
-                        System.out.println("This car's current license plate = \""+tempCar.getRegistrationNumber()+"\"");
-                        System.out.println("Enter new license plate");
-                        String newLicensePlate = Main.userInput.nextLine();
-                        tempCar.setRegistrationNumber(newLicensePlate.toUpperCase());
-                        System.out.println("Change accepted, car now looks like this:");
-                        printCarNicely(tempCar);
-                        break;
-                    case 5://registration Date
-                        System.out.println("This car's current registration date = \""+tempCar.getRegistrationYearMonth()+"\"");
-                        System.out.println("Enter new date using format as seen above \"yyyy-MM-dd\"");
-                        String newDate = Main.userInput.nextLine();
-                        LocalDate newLocalDate = LocalDate.parse(newDate);
-                        tempCar.setRegistrationYearMonth(newLocalDate);
-                        System.out.println("Change accepted, car now looks like this:");
-                        printCarNicely(tempCar);
-                        break;
-                    case 6://odometer
-                        System.out.println("This car's current Odometer = \""+tempCar.getOdoMeter()+"\"miles");
-                        System.out.println("Enter new odometer number");
-                        int newOdometer = Main.userInput.nextInt();
-                        tempCar.setOdoMeter(newOdometer);
-                        System.out.println("Change accepted, car now looks like this:");
-                        printCarNicely(tempCar);
-                        break;
-                    case 7://manual/automatic
-                        if(tempCar.isAutomaticGear()){
-                            System.out.println("This car is currently set to have automatic gear, changing it to manual");
-                            tempCar.setAutomaticGear(false);
-                            System.out.println("Change accepted, car now looks like this:");
-                            printCarNicely(tempCar);
-                        } else {
-                            System.out.println("This car is currently set to have manual gear, changing it to automatic");
-                            tempCar.setAutomaticGear(true);
-                            System.out.println("Change accepted, car now looks like this:");
-                            printCarNicely(tempCar);
-                        }
-                        break;
-                    case 8: //availability
-                        if(tempCar.isAvailable()){
-                            System.out.println("This car is currently available, changing it to unavailable");
-                            tempCar.setAvailable(false);
-                            System.out.println("Change accepted, car now looks like this:");
-                            printCarNicely(tempCar);
-                        } else {
-                            System.out.println("This car is currently unavailable, changing it to available");
-                            tempCar.setAvailable(true);
-                            System.out.println("Change accepted, car now looks like this:");
-                            printCarNicely(tempCar);
-                        }
-                        break;
-                    case 9: //cartype-dependant
-                        if(tempCar instanceof FamilyCar){ //if FamilyCar
-                            System.out.println("This car's current amount of seats = \""+((FamilyCar) tempCar).getSeats()+"\"");
-                            System.out.println("Enter new amount of seats");
-                            int newSeatNumber = Main.userInput.nextInt();
-                            ((FamilyCar) tempCar).setSeats(newSeatNumber);
-                            System.out.println("Change accepted, car now looks like this:");
-                            printCarNicely(tempCar);
-                        } else if(tempCar instanceof LuxuryCar){ //if LuxuryCar
-                            System.out.println("This car's current amount of seats = \""+((LuxuryCar) tempCar).getCcm()+"\"");
-                            System.out.println("Enter new CCM number");
-                            int newCcmNumber = Main.userInput.nextInt();
-                            ((LuxuryCar) tempCar).setCcm(newCcmNumber);
-                            System.out.println("Change accepted, car now looks like this:");
-                            printCarNicely(tempCar);
-                        } else if(tempCar instanceof SportCar){ //if SportCar
-                            System.out.println("This car's current horse power = \"" + ((SportCar) tempCar).getHorsePower());
-                            System.out.println("Enter new horse power's");
-                            int newHorsePower = Main.userInput.nextInt();
-                            ((SportCar) tempCar).setHorsePower(newHorsePower);
-                            System.out.println("Change accepted, car now looks like this:");
-                            printCarNicely(tempCar);
-                        } else { //if case 9 was chosen for a normal car
-                            System.out.println();
-                            System.out.println("Invalid Choice");
-                            System.out.println("Returning to main Menu");
-                            return;
-                        }
-                        break;
-                    case 0: //main menu
-                        System.out.println("Returning to main Menu");
+                if(count == 0){ //if no car found
+                    System.out.println("Sorry no Car with that license plate found");
+                    System.out.println();
+                    System.out.println("Type 1 to try again");
+                    System.out.println("Type 0 to return to Main Menu");
+                    int answer = Main.userInput.nextInt();
+                    Main.userInput.nextLine();
+                    if(answer == 0){
+                        System.out.println("Returning to Main Menu");
                         return;
-                    default:
+                    }
+                }
+            } while (tempCar == null); //do while car not found
+
+            System.out.println("Car found with license plate: \"" + licensePlate+"\"");
+            System.out.println("  type 1: Edit Brand                          ");
+            System.out.println("  type 2: Edit Model                           ");
+            System.out.println("  type 3: Edit fuel type                       ");
+            System.out.println("  type 4: Edit License plate                   ");
+            System.out.println("  type 5: Edit Registration Date     ");
+            System.out.println("  type 6: Edit odoMeter                        ");
+            System.out.println("  type 7: Change manual/automatic gear         ");
+            System.out.println("  type 8: Change availability status           ");
+            if(tempCar instanceof FamilyCar){
+                System.out.println("  type 9: Edit amount of seats             ");
+            } else if(tempCar instanceof LuxuryCar){
+                System.out.println("  type 9: Edit CCM number                  ");
+            } else if(tempCar instanceof SportCar){
+                System.out.println("  type 9: Edit horsepower                  ");
+            }
+            System.out.println("  type 0: To return to the main menu           ");
+            int answer = Main.userInput.nextInt();
+            Main.userInput.nextLine();
+            switch(answer){ //switch for changing the specific field
+                case 1://brand
+                    System.out.println("This car's current brand = \""+tempCar.getBrand()+"\"");
+                    System.out.println("Enter new brand name");
+                    String newBrand = Main.userInput.nextLine();
+                    tempCar.setBrand(newBrand);
+                    System.out.println("Change accepted, car now looks like this:");
+                    printCarNicely(tempCar);
+                    break;
+                case 2://model
+                    System.out.println("This car's current model = \""+tempCar.getModel()+"\"");
+                    System.out.println("Enter new model name");
+                    String newModel = Main.userInput.nextLine();
+                    tempCar.setModel(newModel);
+                    System.out.println("Change accepted, car now looks like this:");
+                    printCarNicely(tempCar);
+                    break;
+                case 3://fuel type
+                    System.out.println("This car's current fuel type = \""+tempCar.getFuelType()+"\"");
+                    System.out.println("Enter new fuel type");
+                    String newFuelType = Main.userInput.nextLine();
+                    tempCar.setFuelType(newFuelType);
+                    System.out.println("Change accepted, car now looks like this:");
+                    printCarNicely(tempCar);
+                    break;
+                case 4://license plate
+                    System.out.println("This car's current license plate = \""+tempCar.getRegistrationNumber()+"\"");
+                    System.out.println("Enter new license plate");
+                    String newLicensePlate = Main.userInput.nextLine();
+                    tempCar.setRegistrationNumber(newLicensePlate.toUpperCase());
+                    System.out.println("Change accepted, car now looks like this:");
+                    printCarNicely(tempCar);
+                    break;
+                case 5://registration Date
+                    System.out.println("This car's current registration date = \""+tempCar.getRegistrationYearMonth()+"\"");
+                    System.out.println("Enter new date using format as seen above \"yyyy-MM-dd\"");
+                    String newDate = Main.userInput.nextLine();
+                    LocalDate newLocalDate = LocalDate.parse(newDate);
+                    tempCar.setRegistrationYearMonth(newLocalDate);
+                    System.out.println("Change accepted, car now looks like this:");
+                    printCarNicely(tempCar);
+                    break;
+                case 6://odometer
+                    System.out.println("This car's current Odometer = \""+tempCar.getOdoMeter()+"\"miles");
+                    System.out.println("Enter new odometer number");
+                    int newOdometer = Main.userInput.nextInt();
+                    tempCar.setOdoMeter(newOdometer);
+                    System.out.println("Change accepted, car now looks like this:");
+                    printCarNicely(tempCar);
+                    break;
+                case 7://manual/automatic
+                    if(tempCar.isAutomaticGear()){
+                        System.out.println("This car is currently set to have automatic gear, changing it to manual");
+                        tempCar.setAutomaticGear(false);
+                        System.out.println("Change accepted, car now looks like this:");
+                        printCarNicely(tempCar);
+                    } else {
+                        System.out.println("This car is currently set to have manual gear, changing it to automatic");
+                        tempCar.setAutomaticGear(true);
+                        System.out.println("Change accepted, car now looks like this:");
+                        printCarNicely(tempCar);
+                    }
+                    break;
+                case 8: //availability
+                    if(tempCar.isAvailable()){
+                        System.out.println("This car is currently available, changing it to unavailable");
+                        tempCar.setAvailable(false);
+                        System.out.println("Change accepted, car now looks like this:");
+                        printCarNicely(tempCar);
+                    } else {
+                        System.out.println("This car is currently unavailable, changing it to available");
+                        tempCar.setAvailable(true);
+                        System.out.println("Change accepted, car now looks like this:");
+                        printCarNicely(tempCar);
+                    }
+                    break;
+                case 9: //cartype-dependant
+                    if(tempCar instanceof FamilyCar){ //if FamilyCar
+                        System.out.println("This car's current amount of seats = \""+((FamilyCar) tempCar).getSeats()+"\"");
+                        System.out.println("Enter new amount of seats");
+                        int newSeatNumber = Main.userInput.nextInt();
+                        ((FamilyCar) tempCar).setSeats(newSeatNumber);
+                        System.out.println("Change accepted, car now looks like this:");
+                        printCarNicely(tempCar);
+                    } else if(tempCar instanceof LuxuryCar){ //if LuxuryCar
+                        System.out.println("This car's current amount of seats = \""+((LuxuryCar) tempCar).getCcm()+"\"");
+                        System.out.println("Enter new CCM number");
+                        int newCcmNumber = Main.userInput.nextInt();
+                        ((LuxuryCar) tempCar).setCcm(newCcmNumber);
+                        System.out.println("Change accepted, car now looks like this:");
+                        printCarNicely(tempCar);
+                    } else if(tempCar instanceof SportCar){ //if SportCar
+                        System.out.println("This car's current horse power = \"" + ((SportCar) tempCar).getHorsePower());
+                        System.out.println("Enter new horse power's");
+                        int newHorsePower = Main.userInput.nextInt();
+                        ((SportCar) tempCar).setHorsePower(newHorsePower);
+                        System.out.println("Change accepted, car now looks like this:");
+                        printCarNicely(tempCar);
+                    } else { //if case 9 was chosen for a normal car
                         System.out.println();
                         System.out.println("Invalid Choice");
                         System.out.println("Returning to main Menu");
-                }
+                        return;
+                    }
+                    break;
+                case 0: //main menu
+                    System.out.println("Returning to main Menu");
+                    return;
+                default:
+                    System.out.println();
+                    System.out.println("Invalid Choice");
+                    System.out.println("Returning to main Menu");
             }
+
         } catch (Exception ignored) {
             Main.userInput.nextLine();
             System.out.println();
