@@ -256,8 +256,16 @@ public class UI {
             int maxKM = Main.userInput.nextInt();
             Main.userInput.nextLine();
             int startKM = tempCar.getOdoMeter();
-            System.out.print("Enter Price: ");
-            double price = Main.userInput.nextDouble();
+            int price;
+            if(tempCar instanceof FamilyCar){
+                price = 150;
+            } else if(tempCar instanceof LuxuryCar){
+                price = 300;
+            } else  if(tempCar instanceof SportCar){
+                price = 250;
+            } else{
+                price = 100;
+            }
             Main.userInput.nextLine();
             RentalContract tempContract = new RentalContract(contractID,startTime,endTime,maxKM,startKM,tempCar,tempCustomer,price);
             Main.rentalContracts.add(tempContract);
