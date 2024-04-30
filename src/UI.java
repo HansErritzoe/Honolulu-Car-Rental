@@ -43,7 +43,7 @@ public class UI {
             }
             while (answer != 0);
         }catch (InputMismatchException ignored){
-            Main.userInput.nextLine();//clearer scanneren
+            Main.userInput.nextLine();
             mainMenu();
         }
     }
@@ -67,7 +67,7 @@ public class UI {
                     editCar();
                     break;
                 case 2:
-                    Main.userInput.nextLine(); //dont ask why, have to
+                    Main.userInput.nextLine();
                     editCustomer();
                     break;
                 case 3:
@@ -225,6 +225,7 @@ public class UI {
                     }
                 }
             }while(tempCar == null);
+            tempCar.setAvailable(false);
             int contractID = Main.rentalContracts.size()+1;
             LocalDateTime startTime = LocalDateTime.now();
             LocalDateTime endTime = null;
@@ -234,7 +235,7 @@ public class UI {
                 System.out.println("2. 2 weeks");
                 System.out.println("3. Custom");
                 int choice = Main.userInput.nextInt();
-                Main.userInput.nextLine(); // Consume newline character
+                Main.userInput.nextLine();
                 switch (choice) {
                     case 1:
                         endTime = startTime.plusWeeks(1);
@@ -253,12 +254,14 @@ public class UI {
             }while (endTime == null);
             System.out.print("Enter Max KM: ");
             int maxKM = Main.userInput.nextInt();
-            Main.userInput.nextLine(); // Consume newline character
+            Main.userInput.nextLine();
             int startKM = tempCar.getOdoMeter();
             System.out.print("Enter Price: ");
             double price = Main.userInput.nextDouble();
-            Main.userInput.nextLine(); // Consume newline character
+            Main.userInput.nextLine();
             RentalContract tempContract = new RentalContract(contractID,startTime,endTime,maxKM,startKM,tempCar,tempCustomer,price);
+            Main.rentalContracts.add(tempContract);
+            FileHandler.writeRentalContractsToFile(Main.rentalContracts);
         }catch (InputMismatchException ignored){
             Main.userInput.nextLine();
             mainMenu();
@@ -310,6 +313,7 @@ public class UI {
             }
             if (tempcar != null) {
                 Main.rentalCars.add(tempcar);
+                FileHandler.writeCarsToFile(Main.rentalCars);
                 System.out.println("The following car was added to the list: "+ tempcar);
             }
         }catch (InputMismatchException ignored){
@@ -362,6 +366,7 @@ public class UI {
             }
             if(tempCustomer != null) {
                 Main.customerList.add(tempCustomer);
+                FileHandler.writeCustomersToFile(Main.customerList);
                 System.out.println("The following customer was added to the list: " + tempCustomer);
             }
         } catch (InputMismatchException ignored) {
@@ -459,7 +464,7 @@ public class UI {
                     String name = Main.userInput.nextLine();
                     int count2 = 0;
                     for(RentalContract rentalContract : Main.rentalContracts){
-                        if (rentalContract.getCustomer().getDriverName().toLowerCase().equals(name.toLowerCase())) {
+                        if (rentalContract.getCustomer().getDriverName().equalsIgnoreCase(name)) {
                             System.out.println();
                             System.out.println(rentalContract);
                             System.out.println();
@@ -543,7 +548,7 @@ public class UI {
                     String input = Main.userInput.nextLine();
                     int count = 0;
                     for(Customer customer : Main.customerList){
-                        if (customer.getDriverName().toLowerCase().equals(input.toLowerCase())) {
+                        if (customer.getDriverName().equalsIgnoreCase(input)) {
                             System.out.println();
                             System.out.println(customer);
                             System.out.println();
@@ -987,7 +992,7 @@ public class UI {
                         printCarNicely(tempCar);
                     }
                     break;
-                case 9: //cartype-dependant
+                case 9: //car-type-dependant
                     if(tempCar instanceof FamilyCar){ //if FamilyCar
                         System.out.println("This car's current amount of seats = \""+((FamilyCar) tempCar).getSeats()+"\"");
                         System.out.println("Enter new amount of seats");
