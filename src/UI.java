@@ -66,13 +66,13 @@ public class UI {
                     editCar();
                     break;
                 case 2:
+                    Main.userInput.nextLine(); //dont ask why, have to
                     editCustomer();
                     break;
                 case 3:
                     viewRentalContractsMenu();
                     break;
                 case 0:
-                    mainMenu();
                     break;
                 default:
                     System.out.println();
@@ -306,7 +306,6 @@ public class UI {
                     viewRentalContractsMenu();
                     break;
                 case 0:
-                    mainMenu();
                     break;
                 default:
                     System.out.println();
@@ -387,7 +386,6 @@ public class UI {
                     }
                     break;
                 case 0:
-                    mainMenu();
                     break;
                 default:
                     System.out.println();
@@ -472,7 +470,6 @@ public class UI {
                     }
                     break;
                 case 0:
-                    mainMenu();
                     break;
                 default:
                     System.out.println();
@@ -567,7 +564,6 @@ public class UI {
                     }
                     break;
                 case 0:
-                    mainMenu();
                     break;
                 default:
                     System.out.println();
@@ -589,41 +585,45 @@ public class UI {
     public static void editCustomer(){
         try {
             System.out.println();
-            System.out.println("Displaying list of all Customers");
-            System.out.println();
             Collections.sort(Main.customerList);
             for(Customer customer : Main.customerList){
                 System.out.println(customer);
                 System.out.println();
             }
-            if(Main.userInput.hasNextLine()){ //clears scanner if already has input
-                Main.userInput.nextLine();
-            }
-            System.out.println("Enter Driver name of the customer you want to edit");
-            String driverName = Main.userInput.nextLine();
+            System.out.println("Above is displayed list of all Customers in case needed");
+            //Main.userInput.nextLine(); //clears input
+            String driverName;
             Customer tempCustomer = null;
-            int count = 0;
-            for(Customer customer : Main.customerList){
-                if(customer.getDriverName().equalsIgnoreCase(driverName)){
-                    tempCustomer = customer;
-                    count++;
+            do {
+                System.out.println("Enter Driver name of the customer you want to edit");
+                driverName = Main.userInput.nextLine();
+                int count = 0;
+                for(Customer customer : Main.customerList){
+                    if(customer.getDriverName().equalsIgnoreCase(driverName)){
+                        tempCustomer = customer;
+                        count++;
+                    }
                 }
-            }
-            if(count == 0){ //if no customer
-                System.out.println();
-                System.out.println("Sorry no customer found with that name");
-                System.out.println("        Returning to Main Menu");
-                mainMenu();
-                return;
-            } else { //else run rest of method
-                System.out.println("Customer found with driver name: \"" + driverName+"\"");
+                if(count == 0){ //if no customer
+                    System.out.println("Sorry no Customer with that driver name found");
+                    System.out.println();
+                    System.out.println("Type 1 to try again");
+                    System.out.println("Type 0 to return to Main Menu");
+                    int answer = Main.userInput.nextInt();
+                    Main.userInput.nextLine();
+                    if(answer == 0){
+                        System.out.println("Returning to Main Menu");
+                        return;
+                    }
+                }
+            } while (tempCustomer == null);
+            System.out.println("Customer found with driver name: \"" + driverName+"\"");
                 System.out.println("  type 1: Edit driver's name                     ");
                 System.out.println("  type 2: Edit Address                           ");
                 System.out.println("  type 3: Edit postal code                       ");
                 System.out.println("  type 4: Edit city                              ");
                 System.out.println("  type 5: Edit phone number                      ");
                 System.out.println("  type 6: Edit email                             ");
-
                 if(tempCustomer instanceof PrivateCustomer){
                     System.out.println("  type 7: Edit licenseNumber                 ");
                     System.out.println("  type 8: Edit license release date          ");
@@ -639,71 +639,128 @@ public class UI {
                 switch(answer){ //switch for changing the specific field
                     case 1://driver's name
                         System.out.println("Customer's current driver name: \"" + tempCustomer.getDriverName() + "\"");
+                        System.out.println("Enter new driver name");
+                        String newDriverName = Main.userInput.nextLine();
+                        tempCustomer.setDriverName(newDriverName);
+                        System.out.println("Change accepted, Customer now looks like this:");
+                        printCustomerNicely(tempCustomer);
                         break;
                     case 2://address
                         System.out.println("Customer's current address: \"" + tempCustomer.getAddress() + "\"");
+                        System.out.println("Enter new address");
+                        String newAddress = Main.userInput.nextLine();
+                        tempCustomer.setAddress(newAddress);
+                        System.out.println("Change accepted, Customer now looks like this:");
+                        printCustomerNicely(tempCustomer);
                         break;
                     case 3://postal code
                         System.out.println("Customer's current postal code: \"" + tempCustomer.getPostalCode() + "\"");
+                        System.out.println("Enter new postal code");
+                        int newPostalCode = Main.userInput.nextInt();
+                        tempCustomer.setPostalCode(newPostalCode);
+                        System.out.println("Change accepted, Customer now looks like this:");
+                        printCustomerNicely(tempCustomer);
                         break;
                     case 4://city
                         System.out.println("Customer's current city: \"" + tempCustomer.getCity() + "\"");
+                        System.out.println("Enter new city");
+                        String newCity = Main.userInput.nextLine();
+                        tempCustomer.setCity(newCity);
+                        System.out.println("Change accepted, Customer now looks like this:");
+                        printCustomerNicely(tempCustomer);
                         break;
                     case 5://phone number
                         System.out.println("Customer's current phone number: \"" + tempCustomer.getPhoneNumber() + "\"");
+                        System.out.println("Enter new phone number");
+                        int newPhoneNumber = Main.userInput.nextInt();
+                        tempCustomer.setPhoneNumber(newPhoneNumber);
+                        System.out.println("Change accepted, Customer now looks like this:");
+                        printCustomerNicely(tempCustomer);
                         break;
                     case 6://email
                         System.out.println("Customer's current email: \"" + tempCustomer.getEmail() + "\"");
+                        System.out.println("Enter new email address");
+                        String newEmail = Main.userInput.nextLine();
+                        tempCustomer.setEmail(newEmail);
+                        System.out.println("Change accepted, Customer now looks like this:");
+                        printCustomerNicely(tempCustomer);
                         break;
                     case 7://company type dependant: private=licenseNumber - Company=company name
                         if(tempCustomer instanceof PrivateCustomer){
-
+                            System.out.println("Customer's current license number: \"" + ((PrivateCustomer) tempCustomer).getLicenseNumber() + "\"");
+                            System.out.println("Enter new license number");
+                            int newLicenseNumber = Main.userInput.nextInt();
+                            ((PrivateCustomer) tempCustomer).setLicenseNumber(newLicenseNumber);
+                            System.out.println("Change accepted, Customer now looks like this:");
+                            printCustomerNicely(tempCustomer);
                         } else if (tempCustomer instanceof CompanyCustomer){
-
+                            System.out.println("Customer's current email: \"" + ((CompanyCustomer) tempCustomer).getCompanyName() + "\"");
+                            System.out.println("Enter new company name");
+                            String newCompanyName = Main.userInput.nextLine();
+                            ((CompanyCustomer) tempCustomer).setCompanyName(newCompanyName);
+                            System.out.println("Change accepted, Customer now looks like this:");
+                            printCustomerNicely(tempCustomer);
                         }
                         break;
                     case 8: //company type dependant: private=release date - Company = company address
                         if(tempCustomer instanceof PrivateCustomer){
-
+                            System.out.println("Customer's current license release date: \"" + ((PrivateCustomer) tempCustomer).getReleaseDate() + "\"");
+                            System.out.println("Enter new license release date (format: yyyy-mm-dd)");
+                            LocalDate newDate;
+                            newDate = LocalDate.parse(Main.userInput.nextLine());
+                            ((PrivateCustomer) tempCustomer).setReleaseDate(newDate);
+                            System.out.println("Change accepted, Customer now looks like this:");
+                            printCustomerNicely(tempCustomer);
                         } else if (tempCustomer instanceof CompanyCustomer){
-
+                            System.out.println("Customer's current company address: \"" + ((CompanyCustomer) tempCustomer).getCompanyAddress() + "\"");
+                            System.out.println("Enter new company address");
+                            String newCompanyAddress = Main.userInput.nextLine();
+                            ((CompanyCustomer) tempCustomer).setCompanyAddress(newCompanyAddress);
+                            System.out.println("Change accepted, Customer now looks like this:");
+                            printCustomerNicely(tempCustomer);
                         }
                         break;
                     case 9: //company type dependant: private=mainMenu - Company = company phone
                         if(tempCustomer instanceof PrivateCustomer){
                             System.out.println("Invalid choice for private customer - returning to main menu");
-                            mainMenu();
                             return;
                         } else if (tempCustomer instanceof CompanyCustomer){
-
+                            System.out.println("Customer's current company phone: \"" + ((CompanyCustomer) tempCustomer).getCompanyPhone() + "\"");
+                            System.out.println("Enter new company phone");
+                            int newCompanyPhone = Main.userInput.nextInt();
+                            ((CompanyCustomer) tempCustomer).setCompanyPhone(newCompanyPhone);
+                            System.out.println("Change accepted, Customer now looks like this:");
+                            printCustomerNicely(tempCustomer);
                         }
                         break;
                     case 10: //company type dependant private=mainMenu - company=crn number
                         if(tempCustomer instanceof PrivateCustomer){
                             System.out.println("Invalid choice for private customer - returning to main menu");
-                            mainMenu();
                             return;
                         } else if (tempCustomer instanceof CompanyCustomer){
-
+                            System.out.println("Customer's current CRN number: \"" + ((CompanyCustomer) tempCustomer).getCrn() + "\"");
+                            System.out.println("Enter new CRN number");
+                            int newCrnNumber = Main.userInput.nextInt();
+                            ((CompanyCustomer) tempCustomer).setCrn(newCrnNumber);
+                            System.out.println("Change accepted, Customer now looks like this:");
+                            printCustomerNicely(tempCustomer);
                         }
                         break;
                     case 0: //main menu
                         System.out.println("Returning to main Menu");
-                        mainMenu();
                         break;
                     default:
                         System.out.println();
                         System.out.println("Invalid Choice");
-                        System.out.println("Returning to main Menu");
+                        System.out.println("Try again");
+                        editCustomer();
+                        break;
                 }
-            }
         } catch (Exception ignored) {
             Main.userInput.nextLine();
             System.out.println();
             System.out.println("Invalid Input");
             System.out.println("Returning to Main Menu");
-            System.out.println();
-            mainMenu();
         }
 
     }
@@ -873,7 +930,7 @@ public class UI {
                     break;
                 case 0: //main menu
                     System.out.println("Returning to main Menu");
-                    return;
+                    break;
                 default:
                     System.out.println();
                     System.out.println("Invalid Choice");
@@ -892,6 +949,12 @@ public class UI {
     private static void printCarNicely(Car tempCar) {
         System.out.println();
         System.out.println(tempCar);
+        System.out.println();
+    }
+
+    private static void printCustomerNicely(Customer customer) {
+        System.out.println();
+        System.out.println(customer);
         System.out.println();
     }
 
