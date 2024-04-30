@@ -1,6 +1,7 @@
 import CarClasses.*;
 import CustomerClasses.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.InputMismatchException;
 
@@ -170,7 +171,94 @@ public class UI {
 
     public static void registerRental(){
         try {
-
+            Main.userInput.nextLine();
+            Customer tempCustomer = null;
+            do{
+                System.out.println("Enter the customer's full name");
+                String name = Main.userInput.nextLine();
+                int count = 0;
+                for(Customer foundCustomer : Main.customerList){
+                    if(foundCustomer.getDriverName().equalsIgnoreCase(name)){
+                        tempCustomer = foundCustomer;
+                        count++;
+                    }
+                }
+                if(count == 0 && name != null & !name.isEmpty()){
+                    System.out.println("Sorry no customer with that name in our files");
+                    System.out.println("Add a new Customer to our files?\ntype 1: To add new Customer\ntype 0: To try again");
+                    int answer;
+                    try{
+                        answer = Main.userInput.nextInt();
+                        Main.userInput.nextLine();
+                        if (answer == 1){
+                            registerCustomer();
+                        }
+                    } catch (InputMismatchException ignored){
+                        System.out.println("Invalid input. Please enter 1 or 0");
+                    }
+                }
+            }while(tempCustomer == null);
+            Car tempCar = null;
+            do{
+                System.out.println("Enter the cars numberplate");
+                String car = Main.userInput.nextLine();
+                int count = 0;
+                for(Car foundCar : Main.rentalCars){
+                    if(foundCar.getRegistrationNumber().equalsIgnoreCase(car)){
+                        tempCar = foundCar;
+                        count++;
+                    }
+                }
+                if(count == 0 && car != null & !car.isEmpty()){
+                    System.out.println("Sorry no car with that numberplate in our files");
+                    System.out.println("Add a new Car to our files?\ntype 1: To add new Car\ntype 0: To try again");
+                    int answer;
+                    try{
+                        answer = Main.userInput.nextInt();
+                        Main.userInput.nextLine();
+                        if (answer == 1){
+                            registerCar();
+                            Main.userInput.nextLine();
+                        }
+                    } catch (InputMismatchException ignored){
+                        System.out.println("Invalid input. Please enter 1 or 0");
+                    }
+                }
+            }while(tempCar == null);
+            int contractID = Main.rentalContracts.size()+1;
+            LocalDateTime startTime = LocalDateTime.now();
+            LocalDateTime endTime = null;
+            do {
+                System.out.println("Choose duration for rental end time:");
+                System.out.println("1. 1 week");
+                System.out.println("2. 2 weeks");
+                System.out.println("3. Custom");
+                int choice = Main.userInput.nextInt();
+                Main.userInput.nextLine(); // Consume newline character
+                switch (choice) {
+                    case 1:
+                        endTime = startTime.plusWeeks(1);
+                        break;
+                    case 2:
+                        endTime = startTime.plusWeeks(2);
+                        break;
+                    case 3:
+                        System.out.print("Enter Custom End Date (yyyy-MM-dd): ");
+                        String endDateString = Main.userInput.nextLine();
+                        endTime = LocalDateTime.parse(endDateString);
+                        break;
+                    default:
+                        System.out.println("Invalid input. Please try again");
+                }
+            }while (endTime == null);
+            System.out.print("Enter Max KM: ");
+            int maxKM = Main.userInput.nextInt();
+            Main.userInput.nextLine(); // Consume newline character
+            int startKM = tempCar.getOdoMeter();
+            System.out.print("Enter Price: ");
+            double price = Main.userInput.nextDouble();
+            Main.userInput.nextLine(); // Consume newline character
+            RentalContract tempContract = new RentalContract(contractID,startTime,endTime,maxKM,startKM,tempCar,tempCustomer,price);
         }catch (InputMismatchException ignored){
             Main.userInput.nextLine();
             mainMenu();

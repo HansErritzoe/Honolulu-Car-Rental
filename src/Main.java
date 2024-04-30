@@ -73,4 +73,4 @@ public class Main {
         RentalContract rentaltest2 = new RentalContract(2, LocalDateTime.now(),LocalDateTime.now().plusWeeks(1),2000,255, car5, customer2,10000);
         Collections.addAll(rentalContracts,rentaltest1,rentaltest2);
     }
-}
+}  
