@@ -30,7 +30,6 @@ public class RentalContract implements Serializable, Comparable<RentalContract> 
     public int compareTo(RentalContract other){
         return this.contractID-other.contractID;
     }
-
     public String toString(){
         //formats the time to desired output first
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm");

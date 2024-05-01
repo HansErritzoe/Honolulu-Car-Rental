@@ -30,13 +30,12 @@ public class UI {
                         editSubmenu();
                         break;
                     case 3:
-                        System.out.println("Test 3");
+                        processContract();
                         break;
                     case 4:
                         viewAllSubMenu();
                         break;
                     case 5:
-                        System.out.println("Test 5");
                         removeMenu();
                         break;
                 }
@@ -156,7 +155,6 @@ public class UI {
                     removeCar();
                     break;
                 case 2:
-                    System.out.println("Test 3");
                     removeCustomer();
                     break;
             }
@@ -226,7 +224,13 @@ public class UI {
                 }
             }while(tempCar == null);
             tempCar.setAvailable(false);
-            int contractID = Main.rentalContracts.size()+1;
+            int contractID = 0;
+            for (RentalContract contract : Main.rentalContracts) {
+                if (contract.getContractID() >= contractID) {
+                    contractID = contract.getContractID() + 1;
+                }
+            }
+            System.out.println(contractID);
             LocalDateTime startTime = LocalDateTime.now();
             LocalDateTime endTime = null;
             do {
@@ -382,6 +386,29 @@ public class UI {
             mainMenu();
         }
     }
+    public static void processContract(){
+        System.out.println("Enter the id of the contract you want to process");
+        if(Main.userInput.hasNextLine()){Main.userInput.nextLine();}
+        int contractID = Main.userInput.nextInt();
+        for(RentalContract contract : Main.rentalContracts){
+            if (contract.getContractID() == contractID){
+                System.out.println("What is the new odometer reading of the car?");
+                int newOdometer = Main.userInput.nextInt();
+                int oldOdometer = contract.getRentedCars().getOdoMeter();
+                double toPay = contract.price;
+                if(newOdometer - oldOdometer > contract.maxKM){
+                    toPay += (newOdometer - oldOdometer)*1.5;
+                }
+                System.out.println("The total price to pay for renting is: "+toPay);
+                contract.getRentedCars().setOdoMeter(newOdometer);
+                contract.getRentedCars().setAvailable(true);
+                Main.rentalContracts.remove(contract);
+                break;
+            }
+        }
+        FileHandler.writeRentalContractsToFile(Main.rentalContracts);
+    }
+
 
     //displays submenu where user can select if they want to view registered cars, customers or rental contracts
     public static void viewAllSubMenu(){
