@@ -250,9 +250,10 @@ public class UI {
                         endTime = startTime.plusWeeks(2);
                         break;
                     case 3:
-                        System.out.print("Enter Custom End Date (yyyy-MM-dd): ");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        System.out.print("Enter Custom End Date (yyyy-MM-dd hh:mm): ");
                         String endDateString = Main.userInput.nextLine();
-                        endTime = LocalDateTime.parse(endDateString);
+                        endTime = LocalDateTime.parse(endDateString,formatter);
                         break;
                     default:
                         System.out.println("Invalid input. Please try again");
