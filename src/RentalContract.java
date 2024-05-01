@@ -32,7 +32,7 @@ public class RentalContract implements Serializable, Comparable<RentalContract> 
     }
     public String toString(){
         //formats the time to desired output first
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedStartTime = startTime.format(formatter);
         String formattedEndTime = endTime.format(formatter);
 

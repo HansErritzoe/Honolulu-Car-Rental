@@ -2,6 +2,7 @@ import CarClasses.*;
 import CustomerClasses.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.InputMismatchException;
 
@@ -70,7 +71,7 @@ public class UI {
                     editCustomer();
                     break;
                 case 3:
-                    viewRentalContractsMenu();
+                    editRentalContract();
                     break;
                 case 0:
                     break;
@@ -90,6 +91,7 @@ public class UI {
             editSubmenu();
         }
     }
+
 
     public static void welcomeMessage(){
         try {
@@ -326,7 +328,7 @@ public class UI {
             if (tempcar != null) {
                 Main.rentalCars.add(tempcar);
                 FileHandler.writeCarsToFile(Main.rentalCars);
-                System.out.println("The following car was added to the list: "+ tempcar);
+                System.out.println("The following car was added to the list: \n\n"+ tempcar);
             }
         }catch (InputMismatchException ignored){
             Main.userInput.nextLine();
@@ -709,6 +711,225 @@ public class UI {
             viewCarsMenu();
         }
     }
+    //method for editing a Rental Contract object through the console
+    private static void editRentalContract() {
+        try {
+            System.out.println();
+            Collections.sort(Main.rentalContracts);
+            for(RentalContract rentalContract : Main.rentalContracts){
+                System.out.println(rentalContract);
+                System.out.println();
+            }
+            System.out.println("Above is displayed list of all rental contracts in case needed");
+            System.out.println();
+            int rentalContractID;
+            RentalContract tempContract = null;
+            do {
+                System.out.println("Enter Rental Contract ID of the contract you want to edit");
+                rentalContractID = Main.userInput.nextInt();
+                int count = 0;
+                for(RentalContract rentalContract : Main.rentalContracts){
+                    if(rentalContract.getContractID() == rentalContractID){
+                        tempContract = rentalContract;
+                        count++;
+                    }
+                }
+                if(count == 0){ //if no rental contract
+                    System.out.println("Sorry no rental contract with that ID found");
+                    System.out.println();
+                    System.out.println("Type 1 to try again");
+                    System.out.println("Type 0 to return to Main Menu");
+                    int answer = Main.userInput.nextInt();
+                    Main.userInput.nextLine();
+                    if(answer == 0){
+                        System.out.println("Returning to Main Menu");
+                        return;
+                    }
+                }
+            } while (tempContract == null);
+            System.out.println("Rental contract found with ID: \"" + rentalContractID + "\"");
+            System.out.println("  type 1: Edit contract ID               ");
+            System.out.println("  type 2: Edit contract start time       ");
+            System.out.println("  type 3: Edit contract end time         ");
+            System.out.println("  type 4: Edit contract max miles        ");
+            System.out.println("  type 5: Edit contract start miles      ");
+            System.out.println("  type 6: Edit which Car is on the contract             ");
+            System.out.println("  type 7: Edit which Customer is on the contract        ");
+            System.out.println("  type 8: Edit contracts price           ");
+            System.out.println("  type 0: To return to the main menu     ");
+            int answer = Main.userInput.nextInt();
+            Main.userInput.nextLine();
+            switch(answer){
+                case 1://contract ID
+                    System.out.println("This contract's current ID = \""+tempContract.getContractID()+"\"");
+                    System.out.println("Enter new contract ID");
+                    int newID = Main.userInput.nextInt();
+                    tempContract.setContractID(newID);
+                    System.out.println("Change accepted, contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 2: //start time
+                    LocalDateTime newStartTime = null;
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
+                    do{
+                        System.out.println("This contract's current start time = \""+tempContract.getStartTime().format(dateTimeFormatter)+"\"");
+                        System.out.println("Enter new start time for this contract");
+                        System.out.println("Format: yyyy-mm-dd hh:mm as seen above");
+                        String newTime = Main.userInput.nextLine();
+                        int count = 0;
+                        try{
+                            newStartTime = LocalDateTime.parse(newTime,dateTimeFormatter);
+                        } catch (Exception e){
+                            System.out.println();
+                            System.out.println("Invalid format");
+                            System.out.println("Try again");
+                            System.out.println();
+                        }
+                    } while (newStartTime == null);
+                    tempContract.setStartTime(newStartTime);
+                    System.out.println("Change accepted, Rental Contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 3: //end time
+                    LocalDateTime newEndTime = null;
+                    DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd' 'HH:mm");
+                    do{
+                        System.out.println("This contract's current end time = \""+tempContract.getEndTime().format(dateTimeFormatter2)+"\"");
+                        System.out.println("Enter new end time for this contract");
+                        System.out.println("Format: yyyy-mm-dd hh:mm as seen above");
+                        String newTime = Main.userInput.nextLine();
+                        int count = 0;
+                        try{
+                            newEndTime = LocalDateTime.parse(newTime,dateTimeFormatter2);
+                        } catch (Exception e){
+                            System.out.println();
+                            System.out.println("Invalid format");
+                            System.out.println("Try again");
+                            System.out.println();
+                        }
+                    } while (newEndTime == null);
+                    tempContract.setEndTime(newEndTime);
+                    System.out.println("Change accepted, Rental Contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 4: //max miles
+                    System.out.println("This contract's max miles = \""+tempContract.getMaxKM()+"\"");
+                    System.out.println("Enter new max miles");
+                    int newMaxMiles = Main.userInput.nextInt();
+                    tempContract.setMaxKM(newMaxMiles);
+                    System.out.println("Change accepted, contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 5: //start miles
+                    System.out.println("This contract's start miles = \""+tempContract.getStartKM()+"\"");
+                    System.out.println("Enter new start miles");
+                    int newStartMiles = Main.userInput.nextInt();
+                    tempContract.setStartKM(newStartMiles);
+                    System.out.println("Change accepted, contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 6: //car
+                    String licensePlate;
+                    Car tempCar = null;
+                    do { //do while car not found
+                        System.out.println("Enter License Plate of the car you want on the contract");
+                        licensePlate = Main.userInput.nextLine();
+                        int count = 0;
+                        for(Car car : Main.rentalCars){
+                            if(car.getRegistrationNumber().equalsIgnoreCase(licensePlate.toLowerCase())){
+                                tempCar = car;
+                                count++;
+                            }
+                        }
+                        if(count == 0){ //if no car found
+                            System.out.println("Sorry no Car with that license plate found");
+                            System.out.println();
+                            System.out.println("Type 1 to try again");
+                            System.out.println("Type 2 to add a new car to the system");
+                            System.out.println("Type 0 to return to Main Menu");
+                            int answer2 = Main.userInput.nextInt();
+                            Main.userInput.nextLine();
+                            if(answer2 == 0){
+                                System.out.println("Returning to Main Menu");
+                                return;
+                            } else if(answer2 == 2){
+                                registerCar();
+                                Main.userInput.nextLine();
+                                System.out.println();
+                            }
+                        }
+                    } while (tempCar == null); //do while car not found
+                    System.out.println("Car found with license plate: \"" + licensePlate+"\":");
+                    printCarNicely(tempCar);
+                    tempContract.setRentedCars(tempCar);
+                    System.out.println("Change accepted, contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 7: //customer
+                    String driverName;
+                    Customer tempCustomer = null;
+                    do { //do while customer not found
+                        System.out.println("Enter driver name of customer you want on the contract");
+                        driverName = Main.userInput.nextLine();
+                        int count = 0;
+                        for(Customer customer : Main.customerList){
+                            if(customer.getDriverName().equalsIgnoreCase(driverName.toLowerCase())){
+                                tempCustomer = customer;
+                                count++;
+                            }
+                        }
+                        if(count == 0){ //if no car found
+                            System.out.println("Sorry no customer with that driver name found");
+                            System.out.println();
+                            System.out.println("Type 1 to try again");
+                            System.out.println("Type 2 to add a new customer to the system");
+                            System.out.println("Type 0 to return to Main Menu");
+                            int answer3 = Main.userInput.nextInt();
+                            Main.userInput.nextLine();
+                            if(answer3 == 0){
+                                System.out.println("Returning to Main Menu");
+                                return;
+                            } else if(answer3 == 2){
+                                registerCustomer();
+                                Main.userInput.nextLine();
+                                System.out.println();
+                            }
+                        }
+                    } while (tempCustomer == null); //do while car not found
+                    System.out.println("Customer found with driver name: \"" + driverName+"\":");
+                    printCustomerNicely(tempCustomer);
+                    tempContract.setCustomer(tempCustomer);
+                    System.out.println("Change accepted, contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 8://price
+                    System.out.println("This current price = \""+tempContract.getPrice()+"\"");
+                    System.out.println("Enter new price");
+                    int newPrice = Main.userInput.nextInt();
+                    tempContract.setMaxKM(newPrice);
+                    System.out.println("Change accepted, contract now looks like this:");
+                    printContractNicely(tempContract);
+                    break;
+                case 0:
+                    System.out.println("Returning to main Menu");
+                    break;
+                default:
+                    System.out.println();
+                    System.out.println("Invalid Choice");
+                    System.out.println("Try again");
+                    editRentalContract();
+                    break;
+            }
+        } catch (Exception e) {
+            Main.userInput.nextLine();
+            System.out.println();
+            System.out.println("Invalid Input");
+            System.out.println("Returning to Main Menu");
+        }
+
+    }
+
+
     //method for user to edit a Customer Object through the console
     public static void editCustomer(){
         try {
@@ -719,7 +940,7 @@ public class UI {
                 System.out.println();
             }
             System.out.println("Above is displayed list of all Customers in case needed");
-            //Main.userInput.nextLine(); //clears input
+            System.out.println();
             String driverName;
             Customer tempCustomer = null;
             do {
@@ -1080,6 +1301,13 @@ public class UI {
         System.out.println();
     }
 
+    //method for printing Contracts nicely
+    private static void printContractNicely(RentalContract rentalContract) {
+        System.out.println();
+        System.out.println(rentalContract);
+        System.out.println();
+    }
+    //method for printing customers nicely
     private static void printCustomerNicely(Customer customer) {
         System.out.println();
         System.out.println(customer);
