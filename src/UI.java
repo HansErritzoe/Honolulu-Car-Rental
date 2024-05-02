@@ -20,7 +20,7 @@ public class UI {
                 System.out.println("  type 2: Edit Rental Contract/Car/Customer    ");
                 System.out.println("  type 3: Process Rental Contract              ");
                 System.out.println("  type 4: View all Rental Contract/Car/Customer");
-                System.out.println("  type 5: Delete Rental Contract/Car/Customer  ");
+                System.out.println("  type 5: Delete Rental Car/Customer           ");
                 System.out.println("  type 0: To exit program                      ");
                 answer = Main.userInput.nextInt();
                 switch (answer) {
@@ -389,6 +389,7 @@ public class UI {
             mainMenu();
         }
     }
+
     public static void processContract(){
         System.out.println("Enter the id of the contract you want to process");
         if(Main.userInput.hasNextLine()){Main.userInput.nextLine();}
@@ -1321,10 +1322,66 @@ public class UI {
     ////////////////////////////////////////////////////////////////////////
 
     public static void removeCar(){
-
+        if(Main.userInput.hasNextLine()){Main.userInput.nextLine();}
+        String licensePlate;
+        Car tempCar = null;
+        do { //do while car not found
+            System.out.println("Enter License Plate of the car you want to remove from the system");
+            licensePlate = Main.userInput.nextLine();
+            int count = 0;
+            for(Car car : Main.rentalCars){
+                if(car.getRegistrationNumber().equalsIgnoreCase(licensePlate.toLowerCase())){
+                    tempCar = car;
+                    count++;
+                    Main.rentalCars.remove(tempCar);
+                    System.out.println(tempCar.getBrand()+" "+tempCar.getModel()+" has been removed from the system, returning to Main Menu");
+                    FileHandler.writeCarsToFile(Main.rentalCars);
+                }
+            }
+            if(count == 0){ //if no car found
+                System.out.println("Sorry no Car with that license plate found");
+                System.out.println();
+                System.out.println("Type 1 to try again");
+                System.out.println("Type 0 to return to Main Menu");
+                int answer = Main.userInput.nextInt();
+                Main.userInput.nextLine();
+                if(answer == 0){
+                    System.out.println("Returning to Main Menu");
+                    return;
+                }
+            }
+        } while (tempCar == null);
     }
 
-    public static void removeCustomer(){
-
+    public static void removeCustomer() {
+        if(Main.userInput.hasNextLine()){Main.userInput.nextLine();}
+        String driverName;
+        Customer tempCustomer = null;
+        do {
+            System.out.println("Enter Driver name of the customer you want to remove from the system");
+            driverName = Main.userInput.nextLine();
+            int count = 0;
+            for (Customer customer : Main.customerList) {
+                if (customer.getDriverName().equalsIgnoreCase(driverName)) {
+                    tempCustomer = customer;
+                    count++;
+                    Main.customerList.remove(tempCustomer);
+                    System.out.println(tempCustomer.getDriverName()+" has been removed from the system, returning to Main Menu");
+                    FileHandler.writeCustomersToFile(Main.customerList);
+                }
+            }
+            if (count == 0) { //if no customer
+                System.out.println("Sorry no Customer with that driver name found");
+                System.out.println();
+                System.out.println("Type 1 to try again");
+                System.out.println("Type 0 to return to Main Menu");
+                int answer = Main.userInput.nextInt();
+                Main.userInput.nextLine();
+                if (answer == 0) {
+                    System.out.println("Returning to Main Menu");
+                    return;
+                }
+            }
+        } while (tempCustomer == null);
     }
 }
