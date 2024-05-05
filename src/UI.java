@@ -127,11 +127,9 @@ public class UI {
                     registerRental();
                     break;
                 case 2:
-                    System.out.println("Test 2");
                     registerCar();
                     break;
                 case 3:
-                    System.out.println("Test 3");
                     registerCustomer();
                     break;
             }
