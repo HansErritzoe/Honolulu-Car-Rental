@@ -230,7 +230,6 @@ public class UI {
                     contractID = contract.getContractID() + 1;
                 }
             }
-            System.out.println(contractID);
             LocalDateTime startTime = LocalDateTime.now();
             LocalDateTime endTime = null;
             do {
